@@ -1,0 +1,32 @@
+<div class="container-fluid p-5" *ngIf="voiceRecService.isHome">
+    <div class="wave row" [class.hide]="!textToSpeech.isSpeakingNow()">
+        <div class="boxContainer col-12">
+            <div class="box box1"></div>
+            <div class="box box2"></div>
+            <div class="box box3"></div>
+            <div class="box box4"></div>
+            <div class="box box5"></div>
+        </div>
+        <p class="text-white col-12 text-center" *ngIf="voiceRecService.response != ''">{{voiceRecService.response}}</p>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <div *ngIf="voiceRecService._isMarkListening">
+                <p> <img *ngIf="voiceRecService._isMarkListening" src="assets/mic.png" class="" alt=""
+                        width="20px">
+                    Tu pregunta: {{ voiceRecService.question }}</p>
+            </div>
+            <div>
+                <div class="card">
+                    <div class="card-header p-3">
+                        <app-pagination [items]="data" [itemsPerPage]="itemsPerPage" [currentPage]="currentPage"
+                            (onPageChange)="pageChanged($event)" (onFilterChange)="filterChange($event)"></app-pagination>
+                    </div>
+                    <div class="card-body mt-2 scroll">
+                        <app-table-data [data]="currentData"></app-table-data>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

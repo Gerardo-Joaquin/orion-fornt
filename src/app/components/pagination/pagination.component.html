@@ -1,0 +1,20 @@
+<nav>
+    <ul class="pagination justify-content-center">
+        <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === 1">
+            <a class="page-link" (click)="currentPage !== 1 && pageChanged({ page: currentPage - 1 })"
+                aria-label="Previous">
+                <span aria-hidden="true">Anterior</span>
+            </a>
+        </li>
+        <li *ngFor="let page of getPages()" class="page-item" style="cursor: pointer;" [class.active]="page === currentPage">
+            <a class="page-link" (click)="pageChanged({ page: page })">{{ page }}</a>
+        </li>
+        <li class="page-item" style="cursor: pointer;" [class.disabled]="currentPage === totalPages()">
+            <a class="page-link" (click)="currentPage !== totalPages() && pageChanged({ page: currentPage + 1 })"
+                aria-label="Next">
+                <span aria-hidden="true">Siguiente</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+<input class="form-control" type="text" placeholder="Buscar..." (input)="onInputChange($event)">

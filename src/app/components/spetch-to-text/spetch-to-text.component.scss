@@ -1,0 +1,150 @@
+.scroll {
+    overflow-x: scroll;
+    overflow-x: scroll;
+}
+
+.card {
+    border: none;
+    box-shadow: 4px -9px 27px -3px rgba(0, 0, 0, 0.35);
+    -webkit-box-shadow: 4px -9px 27px -3px rgba(56, 7, 70, 0.35);
+    -moz-box-shadow: 4px -9px 27px -3px rgba(0, 0, 0, 0.35);
+    border-radius: 15px;
+    height: 700px;
+}
+
+.mic-animation {
+    animation: latidos 2s infinite;
+    transform-origin: center;
+}
+
+@keyframes latidos {
+    from {
+        transform: none;
+    }
+
+    50% {
+        transform: scale(1.4);
+    }
+
+    to {
+        transform: none;
+    }
+}
+
+.wave {
+    position: fixed;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+    width: 100%;
+    height: 120px;
+    border-radius: 100px 100px 0 0;
+    background: rgb(0, 0, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
+    animation: slideUp 0.5s ease forwards;
+}
+
+@keyframes slideUp {
+    0% {
+        bottom: -110px;
+    }
+    100% {
+        bottom: 0;
+    }
+}
+
+/* Agregar una animación de salida */
+.wave.hide {
+    animation: slideDown 0.5s ease forwards;
+}
+
+@keyframes slideDown {
+    0% {
+        bottom: 0;
+    }
+    100% {
+        bottom: -110px;
+    }
+}
+
+
+.boxContainer {
+    display: flex;
+    justify-content: space-between;
+    height: 70px;
+    --boxSize: 11px;
+    --gutter: 4px;
+    width: calc((var(--boxSize) + var(--gutter)) * 5);
+}
+
+.box {
+    transform: scaleY(.4);
+    height: 100%;
+    width: var(--boxSize);
+    background: #12E2DC;
+    animation-duration: 1s;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    margin-left: 5px;
+    border-radius: 4px;
+}
+
+.box1 {
+    animation-name: quiet;
+}
+
+.box2 {
+    animation-name: normal;
+}
+
+.box3 {
+    animation-name: quiet;
+}
+
+.box4 {
+    animation-name: loud;
+}
+
+.box5 {
+    animation-name: quiet;
+}
+
+@keyframes quiet {
+    25%{
+      transform: scaleY(.6);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(.8);
+    }
+  }
+  
+  @keyframes normal {
+    25%{
+      transform: scaleY(1);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(.6);
+    }
+  }
+  @keyframes loud {
+    25%{
+      transform: scaleY(1);
+    }
+    50%{
+      transform: scaleY(.4);
+    }
+    75%{
+      transform: scaleY(1.2);
+    }
+  }

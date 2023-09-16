@@ -1,0 +1,32 @@
+<table class='table'>
+    <thead class="thead-dark">
+        <tr>
+            <th scope='col'>#</th>
+            <th scope='col'>id</th>
+            <th scope='col'>creado</th>
+            <!-- <th scope='col'>modificado</th> -->
+            <th scope='col'>estatus_documento</th>
+            <th scope='col'>c_idc_rfceeog1</th>
+            <th scope='col'>clave_auditoria</th>
+            <th scope='col'>numero_orden</th>
+            <th scope='col'>tipo_auditoria</th>
+            <th scope='col'>tipo_revision</th>
+            <th scope='col'>nombre</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let item of data; let i = index">
+            <th scope='row'>{{i + 1}}</th>
+            <td>{{item.id}}</td>
+            <td>{{item.creado | date:'medium'}}</td>
+            <!-- <td>{{item.modificado}}</td> -->
+            <td>{{item.estatus_documento}}</td>
+            <td>{{item.c_idc_rfceeog1}}</td>
+            <td>{{item.clave_auditoria}}</td>
+            <td>{{item.numero_orden}}</td>
+            <td>{{item.tipo_auditoria}}</td>
+            <td>{{item.tipo_revision}}</td>
+            <td>{{item.nombre}}</td>
+        </tr>
+    </tbody>
+</table>
