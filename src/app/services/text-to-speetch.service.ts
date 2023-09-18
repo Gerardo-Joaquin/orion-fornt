@@ -16,14 +16,14 @@ export class TextToSpeetchService {
   }
 
   speak(text: string): void {
-    const voices = speechSynthesis.getVoices()
-    const vozSabina = voices.find(voz => voz.name === 'Microsoft Sabina Desktop - Spanish (Mexico)');
 
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.rate = 0.9
     utterance.pitch = 1.2
-    utterance.volume = 0.8
-    utterance.voice = vozSabina!
+    utterance.volume = 1
+    utterance.onerror = (error) => {
+      console.log('error', error);
+    }
     utterance.onend = () => {
       this.isSpeaking = false
     }

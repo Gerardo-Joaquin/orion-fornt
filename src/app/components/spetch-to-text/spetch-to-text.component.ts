@@ -15,15 +15,17 @@ export class SpetchToTextComponent {
   currentData: any
   data: any
   term!: string
+  filters: any
   constructor(
     public voiceRecService: VoiceRecognitionService,
     public textToSpeech: TextToSpeetchService
   ) {
     this.voiceRecService.init();
   }
-
   ngOnInit(): void {
     this.textToSpeech.speak('Hola, soy Orión, te escucho, para comenzar di, hey orión')
+
+
     setTimeout(() => {
       this.voiceRecService.start();
     }, 5000);
@@ -38,26 +40,35 @@ export class SpetchToTextComponent {
     this.endIndex = this.startIndex + this.itemsPerPage;
     this.currentData = data.slice(this.startIndex, this.endIndex);
   }
-  filterChange(term: string): void {
-    console.log(term);
-    this.term = term;
+  filterChange(filters: any): void {
+    this.filters = filters
+    console.log(filters);
     this.currentPage = 1; // Reinicia la página a la primera página cuando se aplica un filtro.
     this.filterAndPaginateData();
   }
 
   private filterAndPaginateData(): void {
-    const terminoLowerCase = this.term.toLowerCase();
-    this.currentData = this.data.filter((item: any) =>
-      item.id.toLowerCase().includes(terminoLowerCase) ||
-      item.creado.toLowerCase().includes(terminoLowerCase) ||
-      item.estatus_documento.toLowerCase().includes(terminoLowerCase) ||
-      item.clave_auditoria.toString().toLowerCase().includes(terminoLowerCase) ||
-      item.numero_orden.toLowerCase().includes(terminoLowerCase) ||
-      item.tipo_auditoria.toLowerCase().includes(terminoLowerCase) ||
-      item.tipo_revision.toLowerCase().includes(terminoLowerCase) ||
-      item.nombre.toLowerCase().includes(terminoLowerCase) ||
-      item.c_idc_rfceeog1.toString().toLowerCase().includes(terminoLowerCase)
-    );
+    this.currentData = this.data.filter((item: any) => {
+      // Aplica todos los filtros aquí
+      const idFilter = item.id.toLowerCase().includes(this.filters.id.toLowerCase());
+      const tipoF = item.tipo_auditoria.toLowerCase().includes(this.filters.tipo.toLowerCase());
+      const orden = item.numero_orden.toLowerCase().includes(this.filters.orden.toLowerCase());
+      const estatusF = item.estatus_documento.toLowerCase().includes(this.filters.estatus.toLowerCase());
+      const claveF = item.clave_auditoria.toString().toLowerCase().includes(this.filters.clave.toLowerCase());
+      const revisionF = item.tipo_revision.toLowerCase().includes(this.filters.revision.toLowerCase());
+      const empresaF = item.nombre.toLowerCase().includes(this.filters.empresa.toLowerCase());
+      // Agrega más filtros para otras columnas aquí
+      // Filtrar por fecha si la fecha seleccionada no es nula
+      const fechaSeleccionada = new Date(this.filters.creado);
+      fechaSeleccionada.setDate(fechaSeleccionada.getDate() + 1)
+      const fechaItem = new Date(item.creado);
+      fechaItem.setHours(0,0,0,0)
+      fechaSeleccionada.setHours(0,0,0,0)
+      // Verificar si la fecha seleccionada coincide con la fecha del elemento
+      const fechaFilter = fechaSeleccionada ? fechaItem.getTime() === fechaSeleccionada.getTime() : true;
+      // Retorna verdadero solo si todos los filtros son verdaderos
+      return idFilter && orden && fechaFilter && tipoF && estatusF && claveF && revisionF && empresaF /* && otrosFiltros */;
+    });
 
 
 

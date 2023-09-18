@@ -97,7 +97,7 @@ export class VoiceRecognitionService {
     ) {
       if (!this._isProcessingRequest) {
         this.firstContact ? this.textToSpeech.speak('¿Si?, te escucho')
-          : this.textToSpeech.speak('Hola, usuario, ¿en qué puedo ayudarte?, hazme una pregunta')
+          : this.textToSpeech.speak('Hola, ¿en qué puedo ayudarte?')
         this.firstContact = true;
         this.response = ''
         this.question = ''
@@ -125,7 +125,9 @@ export class VoiceRecognitionService {
               this.response = res.toString()
               this._isProcessingRequest = false; // Marcar que se ha completado la solicitud
               this.isProcessingRequestSubject.next(this._isProcessingRequest); // Emite el cambio
-              this.startListening();
+              this.isListening = false
+              this.stopRecognition()
+              this.start();
             })
           }
         }

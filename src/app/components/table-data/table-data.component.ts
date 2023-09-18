@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 @Component({
   selector: 'app-table-data',
   templateUrl: './table-data.component.html',
@@ -6,12 +6,27 @@ import { Component, Input } from '@angular/core';
 })
 export class TableDataComponent {
 
-  @Input()data: any
+  @Input() data: any
+  @Output() onFilterChange: EventEmitter<any> = new EventEmitter<any>();
 
+  filters: any = {
+    id: '',
+    creado: new Date(),
+    estatus: '',
+    clave: '',
+    orden: '',
+    tipo: '',
+    revision: '',
+    empresa: '',
+  }
   constructor() {
 
   }
   ngOnInit(): void {
+  }
+
+  filterChange() {
+    this.onFilterChange.emit(this.filters)
   }
 
 }

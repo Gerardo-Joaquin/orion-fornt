@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { VoiceRecognitionService } from './services/voice-recognition.service';
-import { interval } from 'rxjs';
+import { Subscription, interval } from 'rxjs';
 import { TextToSpeetchService } from './services/text-to-speetch.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class AppComponent {
   mensajesProcesamiento!: Array<any>
   mensajesEspera!: Array<any>
   public message = ''
+  private timerSubscription: Subscription | undefined;
   process = false
   constructor(
     public voiceRecService: VoiceRecognitionService,
@@ -26,7 +27,7 @@ export class AppComponent {
       "Entendido, respondiendo a tu pregunta",
       "Comenzaré a analizar la petición",
       "Estoy buscando la información que necesitas sobre la pregunta",
-      "Estoy en proceso de buscar respuestas a la pregunta: en la base de datos",
+      "Estoy en proceso de buscar respuestas a la pregunta en la base de datos",
       "Estoy trabajando en tu solicitud a la pregunta. Solo tomará un momento.",
       "Estoy en busca de la información que necesitas sobre la pregunta",
       "Estoy accediendo a la base de datos para encontrar las respuestas a la pregunta",
@@ -61,12 +62,14 @@ export class AppComponent {
   }
 
   chargeMomments() {
+    if (this.timerSubscription) {
+      this.timerSubscription.unsubscribe(); // Unsubscribe from the previous timer
+    }
     const momment = this.mensajes[Math.floor(Math.random() * 7)]
     this.message = momment
     this.textToSpeech.speak(this.message)
-    const $timer = interval(1000)
     let seconds = 0; // Llevar un registro del tiempo transcurrido
-    $timer.subscribe((second) => {
+    this.timerSubscription = interval(1000).subscribe((second) => {
       if (this.process) {
         seconds++;
         if (second === 15) {

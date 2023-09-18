@@ -23,7 +23,7 @@
                             (onPageChange)="pageChanged($event)" (onFilterChange)="filterChange($event)"></app-pagination>
                     </div>
                     <div class="card-body mt-2 scroll">
-                        <app-table-data [data]="currentData"></app-table-data>
+                        <app-table-data [data]="currentData" (onFilterChange)="filterChange($event)"></app-table-data>
                     </div>
                 </div>
             </div>
